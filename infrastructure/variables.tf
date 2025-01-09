@@ -22,7 +22,7 @@ variable "node_role_arn" {
 variable "vpc_name" {
   description = "VPC Name - VPC Created in the infrastructure repo"
   type        = string
-  default     = "food_vpc"
+  default     = "video_vpc"
 }
 
 variable "vpc_cidr_block" {

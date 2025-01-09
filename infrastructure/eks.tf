@@ -48,7 +48,7 @@ resource "aws_eks_node_group" "video_node_group" {
 
   # remote_access {
   #   ec2_ssh_key = var.ssh_key_name
-  #   # source_security_group_ids = [aws_security_group.food_sg.id]
+  #   # source_security_group_ids = [aws_security_group.video_sg.id]
   # }
 
   ami_type = "AL2_x86_64"
@@ -65,7 +65,7 @@ resource "aws_eks_node_group" "video_node_group" {
   }
 }
 
-# resource "aws_key_pair" "food_ssh_key" {
+# resource "aws_key_pair" "video_ssh_key" {
 #   key_name   = var.ssh_key_name
 #   public_key = file("${var.ssh_key}.pub")
 # }
