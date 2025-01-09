@@ -1,13 +1,10 @@
-provider "aws" {
-  region = var.aws_region
-}
-
 terraform {
   backend "s3" {}
 }
 
 resource "aws_s3_bucket" "video" {
   bucket = "hackathon-video-studio-bucket"
+  provider = aws.us-east-1
 
   tags = {
     Name = "hackathon-video-studio-bucket"
@@ -23,6 +20,7 @@ resource "aws_s3_bucket" "video" {
 
 resource "aws_s3_bucket" "zip" {
   bucket = "hackathon-video-studio-zip-bucket"
+  provider = aws.us-east-1
 
   tags = {
     Name = "hackathon-video-studio-zip-bucket"
