@@ -6,6 +6,7 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: infrastructure
@@ -26,7 +27,7 @@ jobs:
         uses: thaind0/envfile@v1
         with:
           secrets: ${{ toJSON(secrets) }}
-          file: infrastructure/.env
+          file: .env
 
       - name: Handle S3 Buckets
         run: bash bucket.sh
