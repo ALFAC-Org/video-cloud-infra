@@ -1,0 +1,81 @@
+name: Create database
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: database
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Load environment variables
+      uses: thaind0/envfile@v1
+      with:
+        secrets: ${{ toJSON(secrets) }}
+        override: false # prevent overriding VPC_ID | LAMBDA_SG_ID -> don't create the env variables
+        file: .env
+
+    - name: Get VPC ID
+      id: get-vpc-id
+      run: |
+        VPC_ID=$(aws ec2 describe-vpcs --filters "Name=tag:Name,Values=${{ secrets.VPC_NAME }}" --query "Vpcs[0].VpcId" --output text)
+        echo "VPC_ID=$VPC_ID" >> $GITHUB_ENV
+
+    - name: Get EKS Cluster ID
+      id: get-eks-cluster-id
+      run: |
+        CLUSTER_SG_ID=$(aws ec2 describe-security-groups --filters "Name=tag:aws:eks:cluster-name,Values=${{ secrets.CLUSTER_NAME }}" --query "SecurityGroups[0].GroupId" --output text)
+        echo "CLUSTER_SG_ID=$CLUSTER_SG_ID" >> $GITHUB_ENV
+
+    - name: Fail if VPC_ID is empty or undefined
+      if: ${{ env.VPC_ID == '' || env.VPC_ID == 'None' }}
+      run: |
+        echo "VPC_ID is empty. Exiting workflow."
+        exit 1
+
+    - name: Fail if CLUSTER_SG_ID is empty or undefined
+      if: ${{ env.CLUSTER_SG_ID == '' || env.CLUSTER_SG_ID == 'None'  }}
+      run: |
+        echo "CLUSTER_SG_ID is empty. Exiting workflow."
+        exit 1
+
+    - name: Overwrite .env variable
+      if: success()
+      run: |
+        echo "VPC_ID=${{ env.VPC_ID }}" >> .env
+        echo "CLUSTER_SG_ID=${{ env.CLUSTER_SG_ID }}" >> .env
+
+    - name: Setup Terraform
+      if: success()
+      uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform Init
+      if: success()
+      run: |
+        terraform init -upgrade -reconfigure -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" -backend-config="key=video-database.tfstate" -backend-config="region=${{ secrets.AWS_REGION }}"
+
+    - name: Terraform Validate
+      if: success()
+      run: terraform validate
+
+    - name: Terraform Plan
+      if: success()
+      run: bash terraform.sh plan
+
+    - name: Terraform Apply
+      if: success()
+      run: bash terraform.sh apply -auto-approve
