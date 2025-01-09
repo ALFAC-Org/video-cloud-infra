@@ -36,7 +36,6 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
-        working-directory: infrastructure
         run: terraform init -upgrade -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" -backend-config="key=video-infrastructure.tfstate" -backend-config="region=${{ secrets.AWS_REGION }}"
 
       - name: Terraform Validate
@@ -46,5 +45,4 @@ jobs:
         run: bash terraform.sh plan
 
       - name: Terraform Apply
-        working-directory: infrastructure
         run: bash apply -auto-approve
