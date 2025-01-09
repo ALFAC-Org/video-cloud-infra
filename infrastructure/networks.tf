@@ -1,6 +1,10 @@
 # VPC
 resource "aws_vpc" "video_vpc" {
   cidr_block = var.vpc_cidr_block
+  # TODO: Manter para acesso público
+  # Tirar após os testes
+  enable_dns_support = true
+  enable_dns_hostnames = true
 
   tags = {
     Name = var.vpc_name
