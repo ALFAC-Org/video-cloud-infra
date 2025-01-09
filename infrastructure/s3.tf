@@ -7,10 +7,10 @@ terraform {
 }
 
 resource "aws_s3_bucket" "video" {
-  bucket = "video-bucket"
+  bucket = "hackathon-video-studio-bucket"
 
   tags = {
-    Name = "video-bucket"
+    Name = "hackathon-video-studio-bucket"
   }
 
   # Garante que irá destruir o bucket 
@@ -22,10 +22,10 @@ resource "aws_s3_bucket" "video" {
 }
 
 resource "aws_s3_bucket" "zip" {
-  bucket = "zip-bucket"
+  bucket = "hackathon-video-studio-zip-bucket"
 
   tags = {
-    Name = "zip-bucket"
+    Name = "hackathon-video-studio-zip-bucket"
   }
 
   # Garante que irá destruir o bucket 
