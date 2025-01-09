@@ -27,9 +27,10 @@ jobs:
         uses: thaind0/envfile@v1
         with:
           secrets: ${{ toJSON(secrets) }}
-          file: .env
+          file: infrastructure/.env
 
       - name: Handle S3 Buckets
+        working-directory: infrastructure
         run: bash bucket.sh
 
       - name: Setup Terraform
