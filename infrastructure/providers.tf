@@ -17,7 +17,7 @@ terraform {
 # https://registry.terraform.io/providers/hashicorp/aws/5.65.0/docs?utm_content=documentLink&utm_medium=Visual+Studio+Code&utm_source=terraform-ls#environment-variables
 provider "aws" {
   region = var.aws_region
-  alias  = "us-east-1"
+  alias  = "main"
 }
 
 provider "kubernetes" {
