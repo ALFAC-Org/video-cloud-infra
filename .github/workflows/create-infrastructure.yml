@@ -27,6 +27,9 @@ jobs:
         with:
           secrets: ${{ toJSON(secrets) }}
 
+      - name: Handle S3 Buckets
+        run: bash bucket.sh
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
