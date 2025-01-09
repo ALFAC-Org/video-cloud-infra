@@ -57,7 +57,7 @@ resource "aws_db_instance" "video_database" {
   db_name              = var.db_name
   parameter_group_name = "default.mysql8.0"
   skip_final_snapshot  = true
-  publicly_accessible  = true # Remover após os testes
+  # publicly_accessible  = true # Remover após os testes
 
   vpc_security_group_ids = [aws_security_group.video_db_sg.id]
   db_subnet_group_name   = aws_db_subnet_group.video_db_subnet_group.name

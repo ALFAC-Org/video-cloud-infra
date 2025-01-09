@@ -25,11 +25,3 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(aws_eks_cluster.video_cluster.certificate_authority[0].data)
   token                  = data.aws_eks_cluster_auth.video_cluster_auth.token
 }
-
-# # S3 Bucket issues
-# # ref: https://stackoverflow.com/a/62205598/3929980
-# module "video-bucket" {
-#   source = "mod-s3-bucket"
-#   bucket_region = "us-east-1"
-#   bucket_name = "hackathon-video-studio-bucket"
-# }

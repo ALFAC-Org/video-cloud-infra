@@ -4,7 +4,7 @@ terraform {
 
 resource "aws_s3_bucket" "video" {
   bucket   = "hackathon-video-studio-bucket"
-  provider = "aws.main"
+  provider = aws.main
 
   tags = {
     Name = "hackathon-video-studio-bucket"
@@ -20,7 +20,7 @@ resource "aws_s3_bucket" "video" {
 
 resource "aws_s3_bucket" "zip" {
   bucket   = "hackathon-video-studio-zip-bucket"
-  provider = "aws.main"
+  provider = aws.main
 
   tags = {
     Name = "hackathon-video-studio-zip-bucket"
