@@ -75,3 +75,11 @@ jobs:
     - name: Terraform Destroy
       if: success()
       run: bash terraform.sh destroy -auto-approve
+
+    - name: Delete S3 Buckets
+      run: |
+        if aws s3 rb s3://${{ secrets.AWS_BUCKET_NAME }} --force; then
+          echo "Successfully deleted bucket: ${{ secrets.AWS_BUCKET_NAME }}"
+        else
+          echo "Failed to delete bucket: ${{ secrets.AWS_BUCKET_NAME }}"
+        fi
