@@ -26,6 +26,7 @@ jobs:
         uses: thaind0/envfile@v1
         with:
           secrets: ${{ toJSON(secrets) }}
+          file: infrastructure/.env
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
