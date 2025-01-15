@@ -85,3 +85,9 @@ variable "instance_type" {
   type        = string
   default     = "t3.medium"
 }
+
+variable "lambdas_bucket_name" {
+  description = "Bucket for lambdas"
+  type = string
+  default = "hackathon-fiap-lambdas-bucket"
+}

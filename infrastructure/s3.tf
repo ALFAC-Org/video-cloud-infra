@@ -33,3 +33,24 @@ resource "aws_s3_bucket" "zip" {
     prevent_destroy = false
   }
 }
+
+//Cria o bucket para as lambdas
+resource "aws_s3_bucket" "lambdas" {
+  bucket   = var.lambdas_bucket_name
+  provider = aws.main
+
+  tags = {
+    Name = "lambdas"
+  }
+  force_destroy = true
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+// Faz o upload do arquivo zip para o bucket
+resource "aws_s3_object" "lambda_envia_email_erro_processamento" {
+  bucket = aws_s3_bucket.lambdas.bucket
+  key    = "envia_email_erro_processamento.zip"
+  source = "${path.module}/envia_email_erro_processamento.zip"
+}
