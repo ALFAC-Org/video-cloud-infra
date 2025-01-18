@@ -5,7 +5,12 @@ Este é um repositório Git que utiliza o Terraform para gerenciar a infraestrut
 > [!WARNING]
 > Para completo funcionamento da plataforma, é necessário seguir todo o fluxo de provisionamento:
 > 1. A provisão deste repositório;
+> 2. A provisão das lambdas [https://github.com/ALFAC-Org/video-serveless-function](https://github.com/ALFAC-Org/video-serveless-function)
 > 2. A provisão da aplicação [https://github.com/ALFAC-Org/video-studio](https://github.com/ALFAC-Org/video-studio)
+
+## Diagramas
+
+![fluxo-usuario](./docs/fluxo-usuario.svg)
 
 ## Como rodar o projeto
 
