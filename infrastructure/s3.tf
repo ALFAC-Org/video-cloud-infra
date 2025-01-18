@@ -16,23 +16,31 @@ resource "aws_s3_bucket" "video" {
   lifecycle {
     prevent_destroy = false
   }
-}
 
-resource "aws_s3_bucket" "zip" {
-  bucket   = "hackathon-video-studio-zip-bucket"
-  provider = aws.main
+  lifecycle_rule {
+    id      = "delete-old-files"
+    enabled = true
 
-  tags = {
-    Name = "hackathon-video-studio-zip-bucket"
-  }
+    expiration {
+      days = 7
+    }
 
-  # Garante que irá destruir o bucket 
-  # quando o comando terraform destroy for executado
-  force_destroy = true
-  lifecycle {
-    prevent_destroy = false
+    noncurrent_version_expiration {
+      days = 7
+    }
   }
 }
+
+resource "aws_s3_bucket_object" "videos_folder" {
+  bucket = aws_s3_bucket.video.bucket
+  key    = "videos/"
+}
+
+resource "aws_s3_bucket_object" "zip_folder" {
+  bucket = aws_s3_bucket.video.bucket
+  key    = "zip/"
+}
+
 
 //Cria o bucket para as lambdas
 resource "aws_s3_bucket" "lambdas" {
