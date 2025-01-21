@@ -1,7 +1,7 @@
 # EKS Cluster
 resource "aws_eks_cluster" "video_cluster" {
   name     = var.cluster_name
-  role_arn = var.node_role_arn
+  role_arn = var.arn_aws_lab_role
 
   vpc_config {
     subnet_ids = [
@@ -27,7 +27,7 @@ data "aws_eks_cluster_auth" "video_cluster_auth" {
 resource "aws_eks_node_group" "video_node_group" {
   cluster_name    = var.cluster_name
   node_group_name = "video_node_group"
-  node_role_arn   = var.node_role_arn
+  arn_aws_lab_role   = var.arn_aws_lab_role
   subnet_ids      = [
     aws_subnet.video_private_subnet_1.id, 
     aws_subnet.video_private_subnet_2.id

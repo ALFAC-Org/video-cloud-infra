@@ -12,8 +12,8 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "node_role_arn" {
-  description = "ARN of the IAM Role that will be associated with the Node Group"
+variable "arn_aws_lab_role" {
+  description = "ARN of the Standard IAM Role"
   type        = string
   sensitive   = true
 }
@@ -90,4 +90,9 @@ variable "lambdas_bucket_name" {
   description = "Bucket for lambdas"
   type = string
   default = "hackathon-fiap-lambdas-bucket"
+}
+
+variable "lambda_sg_id" {
+  description = "Security Group ID for lambdas"
+  type        = string
 }
