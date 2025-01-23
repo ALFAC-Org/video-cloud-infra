@@ -32,4 +32,5 @@ terraform $METHOD $PARAMS \
 -var "subnet_availability_zone_az_1=$SUBNET_AVAILABILITY_ZONE_AZ_1" \
 -var "subnet_availability_zone_az_2=$SUBNET_AVAILABILITY_ZONE_AZ_2" \
 -var "kubernetes_namespace=$CLUSTER_NAMESPACE" \
--var "cluster_name=$CLUSTER_NAME"
+-var "cluster_name=$CLUSTER_NAME" \
+-var "lambdas_bucket_name=$LAMBDA_BUCKET_NAME"
