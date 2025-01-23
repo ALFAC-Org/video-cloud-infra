@@ -58,11 +58,9 @@ resource "aws_lambda_function" "video_slicer" {
     variables = {
       TO_PROCESS_QUEUE_URL = aws_sqs_queue.videos_to_process.url
       STATUS_QUEUE_URL = aws_sqs_queue.update_processing_status.url
-      BUCKET_NAME = aws_s3_bucket.video.bucket
+      LAMBDA_BUCKET_NAME = aws_s3_bucket.video.bucket
     }
   }
-
-  layers = [aws_lambda_layer_version.py_layer_video_slicer.arn]
 
   lifecycle {
     ignore_changes = [
@@ -82,10 +80,4 @@ resource "aws_lambda_permission" "allow_sqs_invoke" {
   function_name = aws_lambda_function.video_slicer.function_name
   principal     = "sqs.amazonaws.com"
   source_arn    = aws_sqs_queue.videos_to_process.arn
-}
-
-resource "aws_lambda_layer_version" "py_layer_video_slicer" {
-  filename   = "${path.module}/layer_py.zip"
-  layer_name = "py_layer_video_slicer"
-  compatible_runtimes = ["python3.10"]
 }
