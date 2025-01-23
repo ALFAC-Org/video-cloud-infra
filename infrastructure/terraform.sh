@@ -22,7 +22,7 @@ PARAMS="$@"
 terraform $METHOD $PARAMS \
 -var "environment=$ENVIRONMENT" \
 -var "aws_region=$AWS_REGION" \
--var "node_role_arn=$ARN_AWS_LAB_ROLE" \
+-var "arn_aws_lab_role=$ARN_AWS_LAB_ROLE" \
 -var "vpc_name=$VPC_NAME" \
 -var "vpc_cidr_block=$VPC_CIDR_BLOCK" \
 -var "subnet_private_1_cidr_block=$SUBNET_PRIVATE_1_CIDR_BLOCK" \
