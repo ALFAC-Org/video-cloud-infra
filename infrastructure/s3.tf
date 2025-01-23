@@ -62,3 +62,10 @@ resource "aws_s3_object" "lambda_envia_email_erro_processamento" {
   key    = "envia_email_erro_processamento.zip"
   source = "${path.module}/envia_email_erro_processamento.zip"
 }
+
+// Faz o upload do arquivo zip para o bucket
+resource "aws_s3_object" "lambda_video_slicer" {
+  bucket = aws_s3_bucket.lambdas.bucket
+  key    = "video_slicer.zip"
+  source = "${path.module}/video_slicer.zip"
+}
