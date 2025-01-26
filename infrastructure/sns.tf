@@ -13,3 +13,6 @@ resource "aws_sns_topic_subscription" "lambda_email_subscription" {
     aws_lambda_permission.allow_sns_invoke
   ]
 }
+
+//TODO:
+// Adicionar access policy para o job que vai processar os status

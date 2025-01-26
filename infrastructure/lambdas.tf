@@ -74,11 +74,19 @@ resource "aws_lambda_function" "video_slicer" {
   ]
 }
 
-// Adiciona o SQS como trigger para a lambda
+// Adiciona permissões para o SQS
 resource "aws_lambda_permission" "allow_sqs_invoke" {
   statement_id  = "AllowExecutionFromSQS"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.video_slicer.function_name
   principal     = "sqs.amazonaws.com"
   source_arn    = aws_sqs_queue.videos_to_process.arn
+}
+
+// Adiciona o mapeamento de fonte de evento SQS para a lambda
+resource "aws_lambda_event_source_mapping" "sqs_lambda_mapping" {
+  event_source_arn = aws_sqs_queue.videos_to_process.arn
+  function_name    = aws_lambda_function.video_slicer.arn
+  batch_size       = 1
+  enabled          = true
 }
