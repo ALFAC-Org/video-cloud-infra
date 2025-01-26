@@ -1,5 +1,6 @@
 resource "aws_sqs_queue" "videos_to_process" {
-  name = "videos_to_process"
+  name                      = "videos_to_process"
+  visibility_timeout_seconds = 900
 }
 
 resource "aws_sqs_queue" "update_processing_status" {
