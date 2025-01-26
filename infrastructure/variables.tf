@@ -91,8 +91,3 @@ variable "lambdas_bucket_name" {
   type = string
   default = "hackathon-fiap-lambdas-bucket"
 }
-
-variable "lambda_sg_id" {
-  description = "Security Group ID for lambdas"
-  type        = string
-}
