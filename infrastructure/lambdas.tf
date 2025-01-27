@@ -6,6 +6,14 @@ resource "aws_lambda_function" "envia_email_erro_processamento" {
   s3_bucket     = var.lambdas_bucket_name
   s3_key        = "envia_email_erro_processamento.zip"
 
+  vpc_config {
+    security_group_ids = [aws_vpc.video_vpc.default_security_group_id]
+    subnet_ids = [
+      aws_subnet.video_private_subnet_1.id,
+      aws_subnet.video_private_subnet_2.id
+    ]
+  }
+
   # Aqui só criamos um placeholder para evitar que o Terraform faça alterações no futuro
   environment {
     variables = {
