@@ -59,7 +59,7 @@ resource "aws_lambda_function" "video_slicer" {
     variables = {
       TO_PROCESS_QUEUE_URL = aws_sqs_queue.videos_to_process.url
       STATUS_QUEUE_URL     = aws_sqs_queue.update_processing_status.url
-      LAMBDA_BUCKET_NAME   = aws_s3_bucket.video.bucket
+      BUCKET_FILES_NAME    = aws_s3_bucket.video.bucket
     }
   }
 
