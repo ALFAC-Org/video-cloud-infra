@@ -32,20 +32,23 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
+        id: terraform_init
         run: terraform init -reconfigure -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" -backend-config="key=video-infrastructure.tfstate" -backend-config="region=${{ secrets.AWS_REGION }}"
+        continue-on-error: true
 
       - name: Terraform Init (if failed)
-        if: ${{ failure() }}
+        if: ${{ steps.terraform_init.outcome == 'failure' }}
+        id: terraform_init_failed
         run: terraform init -backend-config="bucket=hackathon-video-studio-bucket" -backend-config="key=video-infrastructure.tfstate" -backend-config="region=${{ secrets.AWS_REGION }}"
 
       - name: Terraform Validate
-        if: ${{ success() }}
+        if: ${{ steps.terraform_init.outcome == 'success' || steps.terraform_init_failed.outcome == 'success' }}
         run: terraform validate
 
       - name: Terraform Destroy
-        if: ${{ success() }}
+        if: ${{ steps.terraform_init.outcome == 'success' || steps.terraform_init_failed.outcome == 'success' }}
         run: bash terraform.sh destroy -auto-approve
-      
+
       - name: Delete S3 Buckets
         continue-on-error: true
         run: |
