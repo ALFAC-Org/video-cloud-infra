@@ -39,12 +39,15 @@ jobs:
         run: terraform init -backend-config="bucket=hackathon-video-studio-bucket" -backend-config="key=video-infrastructure.tfstate" -backend-config="region=${{ secrets.AWS_REGION }}"
 
       - name: Terraform Validate
+        if: ${{ success() }}
         run: terraform validate
 
       - name: Terraform Destroy
+        if: ${{ success() }}
         run: bash terraform.sh destroy -auto-approve
       
       - name: Delete S3 Buckets
+        continue-on-error: true
         run: |
           if aws s3 rb s3://${{ secrets.AWS_BUCKET_NAME }} --force; then
             echo "Successfully deleted bucket: ${{ secrets.AWS_BUCKET_NAME }}"
