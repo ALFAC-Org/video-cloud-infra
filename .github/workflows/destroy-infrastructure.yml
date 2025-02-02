@@ -32,6 +32,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
+        continue-on-error: true
         run: terraform init -reconfigure -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" -backend-config="key=video-infrastructure.tfstate" -backend-config="region=${{ secrets.AWS_REGION }}"
 
       - name: Terraform Validate
