@@ -36,7 +36,7 @@ jobs:
 
       - name: Terraform Init (if failed)
         if: ${{ failure() }}
-        run: terraform init
+        run: terraform init -reconfigure -backend-config="bucket=hackathon-video-studio-bucket" -backend-config="key=video-infrastructure.tfstate" -backend-config="region=${{ secrets.AWS_REGION }}"
 
       - name: Terraform Validate
         run: terraform validate
