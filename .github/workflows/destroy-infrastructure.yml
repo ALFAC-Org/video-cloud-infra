@@ -35,6 +35,10 @@ jobs:
         continue-on-error: true
         run: terraform init -reconfigure -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" -backend-config="key=video-infrastructure.tfstate" -backend-config="region=${{ secrets.AWS_REGION }}"
 
+      - name: Terraform Init (if failed)
+        if: failure()
+        run: terraform init -backend-config="key=video-infrastructure.tfstate"
+
       - name: Terraform Validate
         run: terraform validate
 
