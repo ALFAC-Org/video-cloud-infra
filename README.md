@@ -10,7 +10,7 @@ Este é um repositório Git que utiliza o Terraform para gerenciar a infraestrut
 
 ## Diagramas
 
-![fluxo-usuario](./docs/fluxo-usuario.svg)
+![fluxo-usuario](./docs/fluxo-aplicacao.jpg)
 
 ## Como rodar o projeto
 
